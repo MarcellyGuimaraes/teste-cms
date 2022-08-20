@@ -3,6 +3,7 @@ from .models import Post
 from .forms import PostForm
 from django.utils.text import slugify
 from django.contrib import messages
+from profiles.models import UserProfile
 
 # Create your views here.
 def index(request):
@@ -17,15 +18,16 @@ def detail(request, slug):
     return render(request, 'cmsapp/detail.html', context)
 
 def createPost(request):
-    perfil = request.user.userprofile
     form = PostForm()
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid:
             post = form.save(commit=False)
             post.slug = slugify(post.titulo)
-            post.escritor = perfil
+            post.escritor = UserProfile.objects.get(usuario_id = 1)
             post.save()
+
+             
             messages.info(request, 'Artigo criado com sucesso')
             return redirect('create')
         else:

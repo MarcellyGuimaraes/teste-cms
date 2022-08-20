@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    #container {
+        width: 50%;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        height: auto;
+        padding: 30px 20px 20px 20px;
+        border-radius: 30px;
+        margin-bottom: 20px;
+    }
+
+    #container h3 {
+        text-align: center;
+    }
+</style>
+<div class="container" id="container">
+    <h3><strong>Criar Perfil</strong></h3>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+		{{ register_form }}  
+        <input type="submit" class="btn btn-primary" value="Criar">
+        <p>Já tem uma conta? <a href="/logarperfil">Clique aqui para entrar</a> </p>
+    </form>
+</div>
+<script>
+    let inputfields = document.getElementsByTagName('input')
+    let descfield = document.getElementById('id_sobre')
+    descfield.classList.add('form-control')
+
+    for (let i = 0; i < inputfields.length; i++) {
+        inputfields[i].classList.add('form-control')
+    }
+</script>
+
+{% endblock %}
